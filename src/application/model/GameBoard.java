@@ -1,11 +1,11 @@
 package application.model;
 
-public class KalahaGame {
+public class GameBoard {
 	
 	private int[] board;
 	int player;
 	
-	public KalahaGame(int stones) {
+	public GameBoard(int stones) {
 		board = new int[14];
 		player = 0;
 		
@@ -17,32 +17,7 @@ public class KalahaGame {
 		}
 	}
 	
-	public String getBoardToPrint() {
-		String boardToPrint = "\n  |  ";
-		
-		for (int i = 12; i >= 7; i--)
-			boardToPrint = boardToPrint.concat(Integer.toString(board[i]) + "  ");
-		
-		boardToPrint = boardToPrint.concat("|\n--|--------------------|--\n  |  ");
-		
-		for (int i = 6; i > 0; i--)
-			boardToPrint = boardToPrint.concat(Integer.toString(i) + "  ");
-		
-		boardToPrint = boardToPrint.concat("|\n" + Integer.toString(board[13]));
-		boardToPrint = boardToPrint.concat(" |                    | " + Integer.toString(board[6]) + "\n  |  ");
-		
-		for (int i = 1; i < 7; i++)
-			boardToPrint = boardToPrint.concat(Integer.toString(i) + "  ");
-		
-		boardToPrint = boardToPrint.concat("|\n--|--------------------|--\n  |  ");
-		
-		for (int i = 0; i < 6; i++)
-			boardToPrint = boardToPrint.concat(Integer.toString(board[i]) + "  ");
-		
-		boardToPrint = boardToPrint.concat("|\n\n");
-		
-		return boardToPrint;
-	}
+	
 	
 	public int makeMove(int move) {	
 		if ((move >= 1 && move < 7) && board[player % 2 == 0 ? move - 1 : move + 6] != 0) {
@@ -57,7 +32,7 @@ public class KalahaGame {
 			return -1;	
 	}
 	
-	public boolean ifEndOfGame() {
+	public int ifEndOfGame() {
 		boolean ifEnd = true;
 		
 		for (int i = 0; i < 6; i++)
@@ -65,7 +40,7 @@ public class KalahaGame {
 				ifEnd = false;
 		
 		if (ifEnd)
-			return true;
+			return 1;
 		
 		ifEnd = true;
 		
@@ -73,7 +48,8 @@ public class KalahaGame {
 			if (board[i] != 0)
 				ifEnd = false;
 		
-		return ifEnd;
+		
+		return ifEnd ? 2 : 0;
 	}
 	
 	public String getResults() {
@@ -125,7 +101,7 @@ public class KalahaGame {
 				board[index] = 0;
 			}
 		} else if ((index == 6 && player % 2 == 0) || (index == 13 && player % 2 == 1)) {
-			if (!ifEndOfGame()) 
+			if (ifEndOfGame() == 0) 
 				return true;
 		}
 		

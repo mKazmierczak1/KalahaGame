@@ -1,8 +1,6 @@
 package application.controllers;
 
 import java.io.IOException;
-
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -26,10 +24,11 @@ public class EntryController {
 	
 	private void startGame(ActionEvent event, String mode) {
 		try {
-			root = FXMLLoader.load(getClass().getResource("/application/view/GameBoard.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/GameScene.fxml"));
+			root = loader.load();
 			
-			ObservableList<Node> list = root.getChildrenUnmodifiable();
-			list.get(list.size() - 1).setId(mode);
+			GameSceneController controller = loader.getController();
+			controller.gameInit(6);
 			
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
