@@ -52,7 +52,7 @@
                   <Font name="System Bold" size="34.0" />
                </font>
             </Label>
-            <Label fx:id="hole01" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#makeMove" prefHeight="70.0" prefWidth="70.0" text=" " textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Label fx:id="hole1" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#makeMove" prefHeight="70.0" prefWidth="70.0" text=" " textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="34.0" />
                </font>
@@ -119,5 +119,10 @@
             </Label>
          </children>
       </GridPane>
+      <Label fx:id="turnLabel" layoutX="70.0" layoutY="428.0" text="Turn:  Player 1">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

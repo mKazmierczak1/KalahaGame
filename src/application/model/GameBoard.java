@@ -17,8 +17,6 @@ public class GameBoard {
 		}
 	}
 	
-	
-	
 	public int makeMove(int move) {	
 		if ((move >= 1 && move < 7) && board[player % 2 == 0 ? move - 1 : move + 6] != 0) {
 			if (executeMove(player % 2 == 0 ? move - 1 : move + 6))
@@ -32,7 +30,7 @@ public class GameBoard {
 			return -1;	
 	}
 	
-	public int ifEndOfGame() {
+	public boolean ifEndOfGame() {
 		boolean ifEnd = true;
 		
 		for (int i = 0; i < 6; i++)
@@ -40,7 +38,7 @@ public class GameBoard {
 				ifEnd = false;
 		
 		if (ifEnd)
-			return 1;
+			return true;
 		
 		ifEnd = true;
 		
@@ -49,7 +47,7 @@ public class GameBoard {
 				ifEnd = false;
 		
 		
-		return ifEnd ? 2 : 0;
+		return ifEnd;
 	}
 	
 	public String getResults() {
@@ -101,7 +99,7 @@ public class GameBoard {
 				board[index] = 0;
 			}
 		} else if ((index == 6 && player % 2 == 0) || (index == 13 && player % 2 == 1)) {
-			if (ifEndOfGame() == 0) 
+			if (!ifEndOfGame()) 
 				return true;
 		}
 		

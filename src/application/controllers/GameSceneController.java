@@ -27,7 +27,7 @@ public class GameSceneController implements Initializable {
 	@FXML
 	private GridPane board;
 	@FXML
-	private Label hole0;
+	private Label turnLabel;
 	
 	
 	public void gameInit(int numberOfStones) {
@@ -39,16 +39,41 @@ public class GameSceneController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		list = board.getChildren();
-		System.out.println(list);
 		turn = 0;	
 	}
 	
 	public void makeMove(MouseEvent event) {
-		System.out.println("Click!");
+		boolean wrongHole = false;
+		Label hole = (Label)event.getSource();
+		String nr = hole.getId().substring(4);
+		int holeNumber = Integer.parseInt(nr);
 		
-		checkIfEnd(event, false);
+		if (turn == 0 && holeNumber >= 0 && holeNumber < 6) {
+			if (gameBoard.makeMove(holeNumber + 1) != 1) {
+				turn = 1;
+				turnLabel.setText("Turn: Player " + (turn + 1));
+			}
+				
+		}
+		else if (turn == 1 && holeNumber >= 7 && holeNumber < 13)  {
+			if (gameBoard.makeMove(holeNumber - 6) != 1) {
+				turn = 0;
+				turnLabel.setText("Turn: Player " + (turn + 1));
+			}
+				
+		}
+		else
+			wrongHole = true;
+			
+		if (!wrongHole) {
+			updateBoard();
+			checkIfEnd(event, false);
+		}	
 	}
 	
+	public void mouseOnHole(MouseEvent event) {
+		
+	}
 	
 	private void updateBoard() {
 		int [] tab = gameBoard.getBoardCopy();
@@ -60,14 +85,8 @@ public class GameSceneController implements Initializable {
 	}
 	
 	private boolean checkIfEnd(MouseEvent event, boolean ifAI) {
-		int response = gameBoard.ifEndOfGame();
-		
-		if (response == 1) {
-			showInfoDialog(event, "Player 1 won!");
-			return true;
-		}
-		else if (response == 2) {
-			showInfoDialog(event, "Player 2 won!");
+		if (gameBoard.ifEndOfGame()) {
+			showInfoDialog(event, gameBoard.getResults());
 			return true;
 		}
 		

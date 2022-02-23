@@ -28,7 +28,7 @@ public class EntryController {
 			root = loader.load();
 			
 			GameSceneController controller = loader.getController();
-			controller.gameInit(6);
+			controller.gameInit(4);
 			
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
