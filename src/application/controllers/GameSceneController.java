@@ -43,10 +43,12 @@ public class GameSceneController implements Initializable {
 	}
 	
 	public void makeMove(MouseEvent event) {
-		boolean wrongHole = false;
 		Label hole = (Label)event.getSource();
 		String nr = hole.getId().substring(4);
 		int holeNumber = Integer.parseInt(nr);
+		
+		if (hole.getText().equals("0"))
+			return;
 		
 		if (turn == 0 && holeNumber >= 0 && holeNumber < 6) {
 			if (gameBoard.makeMove(holeNumber + 1) != 1) {
@@ -63,12 +65,10 @@ public class GameSceneController implements Initializable {
 				
 		}
 		else
-			wrongHole = true;
+			return;
 			
-		if (!wrongHole) {
-			updateBoard();
-			checkIfEnd(event, false);
-		}	
+		updateBoard();
+		checkIfEnd(event, false);
 	}
 	
 	public void mouseOnHole(MouseEvent event) {

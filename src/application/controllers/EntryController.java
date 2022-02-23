@@ -1,11 +1,14 @@
 package application.controllers;
 
 import java.io.IOException;
+import java.util.Optional;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 public class EntryController {
@@ -28,14 +31,19 @@ public class EntryController {
 			root = loader.load();
 			
 			GameSceneController controller = loader.getController();
-			controller.gameInit(4);
+			
+			TextInputDialog dialog = new TextInputDialog("4");
+			dialog.setTitle("Stones number");
+			dialog.setHeaderText(null);
+			dialog.setContentText("Please enter a number of stones in a single hole:");
+			
+			Optional<String> result = dialog.showAndWait();
+			result.ifPresent(number -> controller.gameInit(Integer.parseInt(number)));
 			
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
-			
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
